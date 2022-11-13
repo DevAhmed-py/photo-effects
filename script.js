@@ -8,7 +8,7 @@ const reader = new FileReader()
 function uploadImage(e) {
     reader.readAsDataURL(e.target.files[0])
     reader.onload = () => {
-        img.src = ''
+        img.src = reader.result
         img.onload = () => {
             canvas.width = img.width
             canvas.height = img.height
@@ -111,13 +111,27 @@ function grb() {
     ctx.putImageData(imageData, 0, 0)
 }
 
+function clearChanges() {
+    img.src = reader.result
+}
+
+function download() {
+    const image = canvas.toDataURL()
+    const link = document.createElement("a")
+    link.href = image
+    link.download = "image.png"
+    link.click()
+}
+
 document.querySelectorAll('button')[0].addEventListener("click", greyscale)
 document.querySelectorAll('button')[1].addEventListener("click", sepia)
 document.querySelectorAll('button')[2].addEventListener("click", invert)
-document.querySelectorAll('button')[2].addEventListener("click", rbg)
-document.querySelectorAll('button')[2].addEventListener("click", bgr)
-document.querySelectorAll('button')[2].addEventListener("click", gbr)
-document.querySelectorAll('button')[2].addEventListener("click", grb)
+document.querySelectorAll('button')[3].addEventListener("click", rbg)
+document.querySelectorAll('button')[4].addEventListener("click", bgr)
+document.querySelectorAll('button')[5].addEventListener("click", gbr)
+document.querySelectorAll('button')[6].addEventListener("click", grb)
+document.querySelectorAll('button')[7].addEventListener("click", clearChanges)
+document.querySelectorAll('button')[8].addEventListener("click", download)
 
 const imageLoader = document.getElementById("uploader")
 imageLoader.addEventListener("change", uploadImage)
